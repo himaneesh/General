@@ -1,0 +1,102 @@
+%% Initialization
+clear ; close all; clc
+%% ==================== Part 1: LOADING ====================
+fprintf(‘Loading Data …\n’)
+d = load(‘data.txt’);
+m=length(d);
+X= d(:,1); %% Extracting 1st Column from the dataset – Features
+y = d(:, 2); %% Extracting 2nd Column from the dataset – Target
+fprintf(‘Data Loaded…\n’)
+
+
+%% ======================= Part 2: Plotting =======================
+fprintf(‘Plotting Data …\n’)
+function plotData(X, y)
+scatter(X,y);
+xlabel(“Age of Car in Years”);
+ylabel(“Price in Lakhs”);
+end;
+
+plotData(X,y);
+hold %% To hold the plotted graph so as to draw over it in the future
+fprintf(‘Data plotted …\n’)
+fprintf(‘Program paused. Press enter to continue.\n’);
+pause;
+
+%% =================== Part 3: Linear Matrix preparation ===================
+fprintf(‘Preparing Matrices for Matrix multiplication\n’);
+X = [ones(m, 1), X]; %% Hypothesis – theta0x0 + theta1x1
+fprintf(‘Preparing Matrices for Matrix multiplication\n’);
+theta = zeros(2, 1);%2*1 matrix of 0 %% Initialization of theta0 and theta1
+fprintf(‘Matrix prepared for x0 x1 theta0 theta1 and y.\n’);
+X;
+y;
+theta;
+fprintf(‘Program paused. Press enter to continue.\n’);
+pause;
+
+% Some gradient descent settings
+iterations = 30000; %% Number of steps towards global Minimum
+alpha = 0.01; %% Range of steps
+fprintf(‘\nTesting the cost function …\n’)
+% compute and display initial cost function using square error method
+
+function J = costFunc(X,y,theta)
+J=0;
+m = length(y); % number of training examples
+J=(1/(2*m))*sum(((X*theta)-y).^2)
+
+end;
+
+J = costFunc(X, y, theta);
+fprintf(‘With theta = [0 ; 0]\nCost computed = %0.2f\n’, J);
+
+% further testing of the cost function
+J = costFunc(X, y, [450000 ; -50000]);
+fprintf(‘\nWith theta = [400000 ; -40000]\nCost computed = %f\n’, J);
+
+fprintf(‘Program paused. Press enter to continue.\n’);
+pause;
+
+function theta = gradientDescentFunc(X,y,theta,alpha,iter)
+
+m = length(y); %% length of sample data
+fprintf(‘Value of m is\n’);
+fprintf(‘%f\n’, m);
+pause;
+for i=1:iter
+htheta=X*theta; %% Hypothesis
+temp0=theta(1,:)-(alpha/m)*sum((htheta-y).*X(:,1)); %% Partial derivative for Gradient descent
+temp1=theta(2,:)-(alpha/m)*sum((htheta-y).*X(:,2)); %% Partial derivative for Gradient descent
+theta(1,:)=temp0; %% Simultaneous updation
+theta(2,:)=temp1; %% Simultaneous updation
+
+end;
+end;
+
+fprintf(‘\nRunning Gradient Descent …\n’)
+% run gradient descent
+theta = gradientDescentFunc(X, y, theta, alpha, iterations);
+
+% print theta to screen
+fprintf(‘Theta found by gradient descent:\n’);
+fprintf(‘%f\n’, theta);
+fprintf(‘Expected theta values (approx)\n’);
+
+% Plot the linear fit
+hold on; % keep previous plot visible
+plot(X(:,2), X*theta, ‘-‘)
+legend(‘Training data’, ‘Linear regression’)
+hold off % don’t overlay any more plots on this figure
+
+
+
+% Predict values for age 3.5 years and 7 years
+predict1 = [1, 3.5] *theta;
+fprintf(‘For age of car=3.5 we predict a price of %f\n’,…
+predict1);
+predict2 = [1, 7] * theta;
+fprintf(‘For age of car=7 we predict a priceage of car=3.5 of %f\n’,…
+predict2);
+
+fprintf(‘We are done.\n’);
