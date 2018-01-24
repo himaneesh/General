@@ -1,0 +1,19 @@
+
+
+cd ‘C:/Users/sherPCP/Desktop/Octave/Articles/Arc1’; % This is the location of the data file
+d = load(‘data1.txt’);
+
+m=length(d); % number of training examples
+
+D=[ones(m,1),d] % Add a column of ones to d
+
+X=D(:,1:2) % Separate out the 1st  and 2nd  columns in the dataset as X  (features-theta0 and theta1)
+
+Y=D(:,3) %Separate out the 3rd column in dataset as Y (target)
+theta = (pinv(X’*X))*X’*Y;% Normal equation – θ = (XTX)−1 XTy  equivalent in Octave
+
+scatter(d(:,2),d(:,1));%Scatter Plot
+
+holdon;% to draw over existing figure
+
+plot(X(:,2), X*theta, ‘-‘)%Linear equation after we put the value of theta
