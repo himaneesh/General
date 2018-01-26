@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+	public static int fillMeupAlt[] ;
+    private static int stairMeMemorisationAlt(int n){
+        if(n==0){
+            return 1;
+        }
+        if(n==1){
+            return 1;
+        }
+        if(n==2){
+            return 2;
+        }
+        if(fillMeupAlt[n]==0) {
+        	fillMeupAlt[n]=stairMeMemorisationAlt(n-1)+stairMeMemorisationAlt(n-2)+stairMeMemorisationAlt(n-3);
+            }
+          return fillMeupAlt[n];
+    }
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int s = in.nextInt();
+        for(int a0 = 0; a0 < s; a0++){
+            int n = in.nextInt();
+           fillMeupAlt = new int[n+1];
+            System.out.println(stairMeMemorisationAlt(n));
+        }
+    }
+}
