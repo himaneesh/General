@@ -1,0 +1,22 @@
+package com.hp.hr;
+
+import java.math.BigInteger;
+import java.util.Scanner;
+
+public class ExtraLongFactorials {
+int one=1;
+	   public static void main(String[] args) {
+	        Scanner in = new Scanner(System.in);
+	        int n = in.nextInt();
+	       BigInteger fOff = fact(BigInteger.valueOf(n));
+	       System.out.println(fOff);
+	    }
+
+	private static BigInteger fact(BigInteger n) {
+		if(n==BigInteger.valueOf(0)) {
+			return ( BigInteger.valueOf(1));
+		}
+		return n.multiply(fact(n.subtract(BigInteger.valueOf(1))));
+	}
+
+}
