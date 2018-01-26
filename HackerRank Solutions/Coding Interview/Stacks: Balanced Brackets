@@ -1,0 +1,63 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    
+ public static boolean isBalanced(String expression) {
+    	Stack<Character> stackParan = null;
+    	if(null!=expression && expression.length()>0) {
+    		String rightParanthesis = "]})";
+    		char exp[] = expression.toCharArray();
+    		stackParan = new Stack<>();
+    		for(Character chr :  exp) {
+    			if(rightParanthesis.contains(chr.toString()) ) {
+    				if(stackParan.size()==0) {
+    					return false;
+    				}
+    				else {
+    				char matchingLeft = getMatchingLeft(chr);
+    				if(stackParan.get(stackParan.size()-1).equals(matchingLeft)) {
+    					stackParan.pop();
+    				}else {
+    					return false;
+    				}
+    				}
+    			}
+    			else {
+    				stackParan.push(chr);
+    			}
+    		}
+    		if(stackParan.isEmpty()) {
+    		return true;
+    		}
+    	}
+		return false;
+    }
+  
+    private static char getMatchingLeft(Character chr) {
+		Character matchingLeft='@';
+    	if(chr == ']') {
+    		matchingLeft='[';
+		}
+    	else 	if(chr == '}') {
+    		matchingLeft='{';
+		}
+    	else  if(chr == ')') {
+    		matchingLeft='(';
+    	}
+		return matchingLeft;
+	}
+
+	public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int t = in.nextInt();
+        for (int a0 = 0; a0 < t; a0++) {
+            String expression = in.next();
+            System.out.println( (isBalanced(expression)) ? "YES" : "NO" );
+        }
+    }
+
+}
