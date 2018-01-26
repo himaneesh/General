@@ -1,0 +1,133 @@
+package com.hp.hr;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class Heap<T extends Comparable<T>> {
+	
+	private   ArrayList<T> items;
+	    public Heap() {
+	        items = new ArrayList<T>();
+	       
+	    }
+	    
+	public void insert(T parseInt) {
+		/*
+		 * Insert in the End and ShiftUp
+		 * 	
+		 */
+		items.add(parseInt);
+		
+		
+		shiftUp();
+	}
+
+	private void shiftUp() {
+		/*
+		 * Check for its parent with formula and if element is smaller then shift up using swap
+		 */
+		int elementIndex = items.size()-1;
+		
+		
+		while(elementIndex>=0) {
+		int parentIndex = (elementIndex-1)/2;
+		T parent = items.get(parentIndex);
+		T element=items.get(elementIndex);
+		if(element.compareTo(parent)>0) {
+			//Swap
+			items.set(elementIndex, parent);
+			items.set(parentIndex, element);
+			elementIndex=parentIndex;
+			
+		}
+		else
+		{
+			// No shift as the element is at its right position
+			break;
+		}
+		}
+	}
+
+	public T delete() {
+		/*
+		 * Delete from top and replace top from size-1 amd shift down
+		 */
+		if(items.size()==0) {
+		//exception	
+			return (T) "empty";
+		}
+		if(items.size()==1) {
+			return items.remove(0);
+		}
+		T hold = items.get(0);
+		items.add(0, items.get(items.size()-1));
+		
+		
+		shiftDown();
+		return hold;
+	}
+
+	private void shiftDown() {
+	
+		int parentIndex = 0;
+		int leftChildIndex = (2*parentIndex+1);
+		
+		
+		/*
+		 * 
+		 * Get Max(LeftChild,RightChild)
+		 * 
+		 */
+		while(leftChildIndex<items.size()) {
+			int max=leftChildIndex;
+			int rightChildIndex = leftChildIndex+1;
+			
+			if(rightChildIndex<items.size()) {
+				//RIght CHild present
+				//Compare right and left
+				if(items.get(rightChildIndex).compareTo(items.get(leftChildIndex))>0)  {
+					max=rightChildIndex;
+				}
+			}
+			if(items.get(max).compareTo(items.get(parentIndex))>0) {
+				T temp = items.get(parentIndex);
+				items.set(parentIndex, items.get(max));
+				items.set(max, temp);
+				parentIndex=max;
+				leftChildIndex=parentIndex*2+1;
+			}
+			else {
+				break;
+			}
+		}
+		
+	}
+
+	public boolean isEmpty() {
+		return items.isEmpty();
+				
+	}
+	  public String toString() {
+	        return items.toString();
+	    }
+
+		public static void main(String[] args) {
+	        // TODO Auto-generated method stub
+	        Heap<Integer> hp = new Heap<Integer>();
+	        Scanner sc = new Scanner(System.in);
+	        System.out.print("Enter next int, 'done' to stop: ");
+	        String line = sc.next();
+	        while (!line.equals("done")) {
+	            hp.insert(Integer.parseInt(line));
+	            System.out.println(hp);
+	            System.out.print("Enter next int, 'done' to stop: ");
+	            line = sc.next();
+	        }
+	         
+	        while (!hp.isEmpty()) {
+	            int max = hp.delete();
+	            System.out.println(max + " " + hp);
+	        }
+	    }
+}
