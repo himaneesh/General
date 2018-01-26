@@ -1,0 +1,50 @@
+package com.hp.hr;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
+public class NonDivisibleSubset {
+static int currMax;
+
+	    public static void main(String[] args) {
+	        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+	    	Scanner sc = new Scanner(System.in);
+	        int n=sc.nextInt();int k = sc.nextInt();
+	        int arr[] = new int[k];
+	        int index=0;
+	        while(index<n) {
+	        	arr[sc.nextInt()%k]++;
+	        	index++;
+	        }
+	        System.out.println("Start");
+	        for(int arr1:arr) {
+	        	System.out.println(arr1);
+	        }
+	        System.out.println("End");
+	        if(k%2==0 && arr[k/2]!=0) {
+	        	arr[k/2]=1;
+	        	currMax++;
+	        }
+	
+	        for(int i=1,j=k-i;i<=k/2;i++,j=k-i) {
+	            
+	        	if(arr[i]>arr[j] ) {
+	        		currMax+=arr[i];
+	        	}
+	        	else if (arr[i]<arr[j])
+	        	{
+	        		currMax+=arr[j];
+	        	}
+	        }
+	        if(arr[0]!=0) {
+	        	currMax++;
+	        }
+	    
+	   System.out.println(currMax);
+	     }
+	     
+	}
