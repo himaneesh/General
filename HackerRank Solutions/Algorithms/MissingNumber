@@ -1,0 +1,53 @@
+package com.hp.array;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MissingNumber {
+
+	public static void main(String[] args) {
+			   Scanner sc=new Scanner(System.in);  
+			   ArrayList<Integer> resArr = new ArrayList<>();
+	   int testCaseNum =sc.nextInt();  
+	   int i=0;
+	    while(i<testCaseNum){
+	        int numOfElements =sc.nextInt();  
+	        int j=0;
+	        int arr1[] = new int[numOfElements-1];
+	        while(j<numOfElements-1){
+	            
+	       int enteredNum = sc.nextInt();
+	           arr1[j++] = enteredNum;
+	        }
+	     	if(arr1[0]!=1 ||     arr1[numOfElements-2]!=numOfElements) {
+	    		int result=0;
+	    		if(arr1[0]!=1) {
+	    			 result = 1;
+	    		}
+	    		else
+	    			result=numOfElements;
+	    		resArr.add(result);
+	        	 break;
+	    	}
+	
+	    for( Integer q=1;q<=arr1.length-1;q++) {
+	    	if(arr1[q]!=q+1) {
+	    		
+	    		resArr.add(q+1);
+	    		break;
+	    	}
+	   
+	    }
+	        
+	        
+			i++;
+			
+		
+		}
+		for (Integer r:resArr) {
+			System.out.println(r);
+		}
+	}
+
+
+}
