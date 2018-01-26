@@ -1,0 +1,48 @@
+package com.hp.array;
+
+import java.util.Scanner;
+
+public class KadaneAlgorithm {
+
+
+		public static void main (String[] args) {
+			   Scanner sc=new Scanner(System.in);  
+			   	 int globalSum=-999;
+		 int currSum=-999;
+	   int testCaseNum =sc.nextInt();  
+	   int i=0;
+	    while(i<testCaseNum){
+	        int numOfElements =sc.nextInt();  
+	        int j=0;
+	        Integer arr1[] = new Integer[numOfElements];
+	        while(j<numOfElements){
+	            
+	       int enteredNum = sc.nextInt();
+	           arr1[j++] = enteredNum;
+	        }
+	        currSum=globalSum=arr1[0];
+	        for(int k=1;k<arr1.length;k++){
+				currSum=max(arr1[k],currSum+arr1[k]);
+				
+				if(currSum>globalSum){
+					globalSum=currSum;
+				}
+			
+				//1 -2 -3 15
+			}
+	        System.out.println(globalSum);
+			i++;
+			
+		
+		}
+	            // - -
+	            
+	    }
+
+		private static int max(Integer integer, int i) {
+			if(i<integer) {
+				return integer;
+			}else return i;
+			
+		}
+	}
