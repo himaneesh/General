@@ -1,0 +1,144 @@
+
+/*
+ * 
+ * Time Complexity : nlogn
+ * https://www.khanacademy.org/computing/computer-science/algorithms/merge-sort/a/analysis-of-merge-sort
+ * number of levels * merging for each level
+ */
+
+public class MergeSortCountingInversions {
+/*	static long inversion=0;
+	static int temp[];
+	   	static long countInversions(int arr[]) {
+	   		temp=new int[arr.length];
+		   sort(arr,0,arr.length-1);
+		   
+		   return 0;
+	    }
+
+	    private static void sort(int[] arr, int l, int r) {
+			
+	    	
+
+	    	if (r > l) {
+		    int mid =((l+r)/2);
+			sort(arr,l,mid);
+			sort(arr,mid+1,r);
+			merge(arr,l,mid+1,r);
+	    	}
+			
+		}
+
+		private static void merge(int[] arr, int left, int mid , int right) {
+			
+			//Why j!=mid+1
+			int i=left,j=mid;
+			int k=left;//k=0
+			while(i<=mid-1 && j<=right ) {//i<=mid && j<=right 
+		
+			if(arr[i]<=arr[j]) {
+				temp[k]=arr[i];
+				
+				 * Consider following case for split inversion : 1 3 5 6 | 2 4 7
+					These two are sorted sub-arrays. When you merge them 1 will need 
+					no inversions but 2 will have to invert all of 3 5 6 to reach to its appropriate place. 
+					if you think deeply enough you will realize that it is in fact the case.
+				 * 
+				 
+				
+				i++;
+				//k++;
+			}
+			else {
+					temp[k]=arr[j];
+					j++;
+					
+					 * why not mid-i+1
+					 
+					inversion+=mid-i;
+					//k++;
+				}
+			else {
+				i++;
+				j++;
+			}
+			k++;
+			}
+			while(j<=mid-1) {//	while(j<=right) {
+				temp[k++] = arr[i++];
+			
+			}
+			  while (j <= right)
+			        temp[k++] = arr[j++];
+			  
+			  Copy back the merged elements to original array
+		      for (i=left; i <= right; i++)
+		        arr[i] = temp[i];
+			}*/
+public static long countInversions(int[] arr){
+        
+        return mergeSort(arr, 0, arr.length - 1);
+    }
+    
+    public static long mergeSort(int[] arr, int start, int end){
+        if(start == end)
+            return 0;
+        int mid = (start + end) / 2;
+        long count = 0;
+        count += mergeSort(arr, start, mid); //left inversions
+        count += mergeSort(arr, mid + 1, end);//right inversions
+        count += merge(arr, start, end); // split inversions.
+        return count;
+    }
+    
+    public static long merge(int[] arr, int start, int end){
+        int mid = (start + end) / 2;
+        int[] newArr = new int[end - start + 1];
+        int curr = 0;
+        int i = start;
+        int j = mid + 1;
+        long count = 0;
+        while(i <= mid && j <=end) {
+            if(arr[i] > arr[j]) {
+                newArr[curr++] = arr[j++];
+                /*
+                 *  * Consider following case for split inversion : 1 3 5 6 | 2 4 7
+					These two are sorted sub-arrays. When you merge them 1 will need 
+					no inversions but 2 will have to invert all of 3 5 6 to reach to its appropriate place. 
+					if you think deeply enough you will realize that it is in fact the case.
+				 * 
+                 * 
+                 */
+                count += mid - i + 1; // Tricky part.
+            }
+            else
+                newArr[curr++] = arr[i++];          
+        }
+         // Leftover elements here.
+        while(i <= mid) {
+            newArr[curr++] = arr[i++];    
+        }
+        
+        while(j <= end) {
+            newArr[curr++] = arr[j++];
+        }
+     
+        System.arraycopy(newArr, 0, arr, start, end - start + 1); // Usual stuff from merge sort algorithm with arrays.
+        return count;
+    }
+
+		public static void main(String[] args) {
+	        Scanner in = new Scanner(System.in);
+	        int t = in.nextInt();
+	        for(int a0 = 0; a0 < t; a0++){
+	            int n = in.nextInt();
+	            int[] arr = new int[n];
+	            for(int arr_i = 0; arr_i < n; arr_i++){
+	                arr[arr_i] = in.nextInt();
+	            }
+	           Long count = countInversions(arr);
+	           System.out.println(count);
+	        }
+	        in.close();
+	    }
+}
