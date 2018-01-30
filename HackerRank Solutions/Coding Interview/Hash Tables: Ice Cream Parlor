@@ -1,0 +1,45 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+
+    public static void main(String[] args) {
+      
+	        
+	        int trips;
+	        int numberOfFlavors, money;
+	 
+	        Scanner in = new Scanner(System.in);
+	        trips = in.nextInt();
+	        while (trips-- > 0) {    
+	            
+	            HashMap<Integer, Integer> iceCreams = new HashMap<>();
+	            
+	            money = in.nextInt();
+	            numberOfFlavors = in.nextInt();
+	            
+	            for (int i = 0; i < numberOfFlavors; i++) {
+	                int cost = in.nextInt();
+	                int balance = money - cost;
+	                
+	                if (iceCreams.containsKey(balance)) {
+	                    int other = iceCreams.get(balance);
+	                    
+	                    // Printing out the indexes of the values we found
+	                    System.out.println(Math.min(i + 1, other) + " " + Math.max(i + 1, other));
+	                    
+	                    // Skipping the next flavors as we already found a match
+	                    in.nextLine();
+
+	                    break;
+	                }
+	                iceCreams.put(cost, i + 1);                
+	            }
+	        }
+	    
+    }
+}
