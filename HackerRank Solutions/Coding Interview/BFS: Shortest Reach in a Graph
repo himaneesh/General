@@ -1,0 +1,123 @@
+package com.hp.crackingTheCodingInterview;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
+
+
+
+public class BFSShortestReachinaGraph {
+	 public static class Graph {
+		 int size;
+		 private HashMap<Integer, Node> nodeLookup = null;
+		
+	        
+	        public Graph(int size) {
+	        	nodeLookup = new HashMap<Integer,Node>(size);
+	        	/*
+	        	 * changed
+	        	 */
+	        	 for(int i = 0; i < size; i++) {
+	                 Node node = new Node(i);
+	                 nodeLookup.put(i, node);
+	             }
+	        	this.size=size;
+	        }
+	       static class Node{
+	       	 int id;
+	       	LinkedList<Node> adjacent = new LinkedList<Node>();
+	       	Node(int id) {
+	       		this.id=id;
+	       	}
+	       }
+
+	        public void addEdge(int source, int destination) {
+	        	Node sourceNode = nodeLookup.get(source);
+	            Node destNode = nodeLookup.get(destination);
+	            
+	            sourceNode.adjacent.add(destNode);
+	            destNode.adjacent.add(sourceNode);
+	        }
+	        
+	        public int[] shortestReach(int startId) {
+	        	int distance[]=new int[size];
+	            Arrays.fill(distance, -1);
+
+	        	HashSet<Integer> visited = new HashSet<>();
+	        	LinkedList<Node> nextInQueue = new LinkedList<Node>();
+	        	
+	        	Node source = nodeLookup.get(startId);
+	        	
+	        	/*
+	        	 * changed
+	        	 */
+	        	distance[startId]=0;
+	        	
+	        	nextInQueue.add(source);
+	        	int defaultCost=6;
+	        	while(nextInQueue.size()!=0) {
+	        		Node next = nextInQueue.remove();
+	       /* 		if(visited.contains(next.id)) {
+	        			continue;
+	        		}
+	        		visited.add(next.id);
+	        		
+	        		for(Node s:next.adjacent) {
+	        			nextInQueue.add(s);
+	        			distance[s.id]=distance[next.id]+defaultCost;
+	        		}*/
+	        		for(Node s:next.adjacent) {
+	        			if(!visited.contains(s.id)) {
+	        			visited.add(s.id);
+	        			nextInQueue.add(s);
+	        			distance[s.id]=distance[next.id]+6;
+	        		}
+	        	}
+	        	}
+				return distance; // 0 indexed
+	        }
+	    }
+	    
+	   public static void main(String[] args) {
+	        Scanner scanner = new Scanner(System.in);
+	      
+	        int queries = scanner.nextInt();
+	        
+	        for (int t = 0; t < queries; t++) {
+	            
+	            // Create a graph of size n where each edge weight is 6:
+	            Graph graph = new Graph(scanner.nextInt());
+	            int m = scanner.nextInt();
+	            
+	            // read and set edges
+	            for (int i = 0; i < m; i++) {
+	                int u = scanner.nextInt() - 1;
+	                int v = scanner.nextInt() - 1;
+	                
+	                // add each edge to the graph
+	                graph.addEdge(u, v);
+	            }
+	            
+	            // Find shortest reach from node s
+	            int startId = scanner.nextInt() - 1;
+	            int[] distances = graph.shortestReach(startId);
+	 
+	            for (int i = 0; i < distances.length; i++) {
+	                if (i != startId) {
+	                    System.out.print(distances[i]);
+	                    System.out.print(" ");
+	                }
+	            }
+	            System.out.println();            
+	        }
+	        
+	        scanner.close();
+	    }
+}
