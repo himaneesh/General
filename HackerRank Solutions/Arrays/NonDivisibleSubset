@@ -1,0 +1,67 @@
+package com.hp.hr;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
+public class NonDivisibleSubset {
+static int currMax;
+
+	    public static void main(String[] args) {
+	    	Scanner sc = new Scanner(System.in);
+	        int n=sc.nextInt();int k = sc.nextInt();
+	        int arr[] = new int[k];
+	        int index=0;
+	        /*
+	         * 
+	         * Fill a new array with nextInt%givenNum
+	         */
+	        while(index<n) {
+	        	arr[sc.nextInt()%k]++;
+	        	index++;
+	        }
+	        System.out.println("Start");
+	        for(int arr1:arr) {
+	        	System.out.println(arr1);
+	        }
+	        System.out.println("End");
+	        /*
+	         * 
+	         * 1.) Odd numbered array is formed, so consider the middle element
+	         * 2.) Middle element cannot be picked more than once as it will double to form the orignal number
+	         */
+	        if(k%2==0 && arr[k/2]!=0) {
+	        	arr[k/2]=1;
+	        	currMax++;
+	        }
+	        /*
+	         * 
+	         * if number =6
+	         * arr[6]={1st,2nd,3rd,4th,5th}
+	         * 1st and 5th = 6 and hence only one can be taken
+	         */
+	        for(int i=1,j=k-i;i<=k/2;i++,j=k-i) {
+	            
+	        	if(arr[i]>arr[j] ) {
+	        		currMax+=arr[i];
+	        	}
+	        	else if (arr[i]<arr[j])
+	        	{
+	        		currMax+=arr[j];
+	        	}
+	        }
+	        /*
+	         * the 0th remainder elements cannot be taken more than one at a time 
+	         * 
+	         */
+	        if(arr[0]!=0) {
+	        	currMax++;
+	        }
+	    
+	   System.out.println(currMax);
+	     }
+	     
+	}
