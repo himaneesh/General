@@ -1,0 +1,39 @@
+package com.hp.interviewBook;
+
+
+
+/*
+ * 
+ * https://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
+ * 
+ * 
+ */
+public class Page63Example12 {
+	public static void main(String[] args) {
+	    new Page63Example12().permutations("ABC");
+	}
+
+	void permutations(String string) {
+	    permutations(string, "");
+	}
+
+	void permutations(String string, String perfix) {
+	    if (string.length() == 0) {
+	        System.out.println(perfix);
+	    } else {
+	        for (int i = 0; i < string.length(); i++) {
+	        	/*
+	        	 * 	startIndex : starting index is inclusive
+					endIndex : ending index is exclusive
+	        	 */
+	        	System.out.println(string.substring(0, i) );
+	        	/*
+	        	 * Returns string from index i+1
+	        	 */
+	        	System.out.println(string.substring(i + 1));
+	            String rem = string.substring(0, i) + string.substring(i + 1);
+	            permutations(rem, perfix + string.charAt(i));
+	        }
+	    }
+	}
+}
