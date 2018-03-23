@@ -1,0 +1,50 @@
+package com.hp.interviewBook;
+
+public class Page65Example1415 {
+
+	
+	public static void main(String[] args) {
+		int arr[]=new int[11];
+		arr[0]=0;
+		arr[1]=1;
+		arr[2]=1;
+		fibWithMemo(arr, 5);
+		/*naive way*/
+		
+		for(int i=0;i<=5;i++) {
+			int val = fibwithoutMemo(i);
+			System.out.println(i+" : "+ val);
+		}
+	}
+	/*
+	 * 
+	 * O()
+	 * 
+	 */
+	private static int fibwithoutMemo(int fibNum) {
+		if(fibNum<=0) {
+			return 0;
+		}
+		if(fibNum==1) {
+			return 1;
+		}
+		
+		return fibwithoutMemo(fibNum-1)+fibwithoutMemo(fibNum-2);
+
+	}
+	/*
+	 * O(N)
+	 * 
+	 */
+	private static int fibWithMemo(int[] arr,int fibNum) {
+		if(arr[fibNum]!=0) {
+			return arr[fibNum];
+		}
+		
+		 int oneLess = fibWithMemo(arr, fibNum-1);
+		 arr[fibNum-1]=oneLess;
+		 int twoLess = fibWithMemo(arr, fibNum-2);
+		 arr[fibNum-2]=twoLess;
+		 return oneLess + twoLess;
+	}
+}
