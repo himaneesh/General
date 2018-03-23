@@ -1,0 +1,105 @@
+package com.hp.interviewBook;
+
+public class Page61Example8 {
+
+	public static void main(String[] args) {
+		char[] alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+		for(char c:alphabet) {
+		System.out.println((c-'A')%52);
+		}
+	/*	String arr[] = {"spqrt","acbd","cbae"};
+		sortStrings(arr,arr.length);
+		sortArr(arr,arr.length);
+		for(String str:arr) {
+			System.out.println(str);
+			
+		}*/
+	}
+
+	private static void sortArr(String[] arr, int length) {
+		for(int i=0;i<arr.length;i++) {
+			System.out.println("Childlklk"+" "+"l"+" "+"r");
+			sort(arr[i],0,arr[i].length()-1);
+			
+		}
+		
+	}
+//0,2,4
+	private static String sort(String string,int l,int r) {
+		if(l==r) {
+			return string;
+		}
+		int midElement=(l+r)/2;
+		//0,2,1
+		System.out.println("leftChild "+l+" "+" "+midElement );
+		sort(string,l,midElement);
+		System.out.println("rightChild "+(midElement+1)+" "+" "+r );
+		//3,3,4
+		sort(string,midElement+1,r);
+		System.out.println("merge "+l+" "+" "+r );
+		merge(string,l,r);
+		
+		return string;
+	}
+
+	private static void merge(String string, int l,  int r) {
+		
+		int mid = (l+r)/2;
+		int i=l;
+		int j=mid+1;
+		char[] newArr = new char[r-l+1];
+		StringBuilder sb = new StringBuilder(string);
+		
+		int k=0;
+		while(i<=mid && j<=r) {
+			if(string.charAt(j)<string.charAt(i))
+			{
+				newArr[k]=string.charAt(j);
+				j++;
+			}
+			if(string.charAt(j)>string.charAt(i))
+			{
+				newArr[k]=string.charAt(i);
+				i++;
+			}
+			if(string.charAt(j)==string.charAt(i))
+			{
+				newArr[k]=string.charAt(i);
+				k++;
+				newArr[k]=string.charAt(i);
+				i++;
+				j++;
+			}
+			k++;
+		}
+		if(i<=mid) {
+			while(j<=r) {
+			newArr[k++]=string.charAt(j++);
+			}
+		}
+		if(k<=r) {
+			while(i<=mid) {
+				newArr[k++]=string.charAt(i++);
+				}
+		}
+		String newarrr = new String(newArr);
+		System.out.println(newarrr);
+			sb.replace(l, r+1, newarrr);
+			for(int q=0;q<sb.length();q++) {
+				System.out.println(sb.charAt(q));
+			}
+			string=null;
+			string = new String(sb.toString());
+			System.out.println(string);
+			/*string=sb.toString();
+			for(char c:string.toCharArray()) {
+				System.out.println(c);
+			}*/
+			 /*System.arraycopy(newArr, 0, string, l, r e- l + 1);*/
+	}
+
+	private static void sortStrings(String[] arr, int length) {
+		
+	}
+
+}
