@@ -1,0 +1,62 @@
+package com.hp.interviewBook;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Page103Ex14 {
+	public static void main(String[] args) {
+		  Scanner in = new Scanner(System.in);
+	        String s = in.next();
+		char[] alphabet = s.toLowerCase().toCharArray();
+		HashMap<Character,Integer> table = new HashMap<>();
+		int length=0;
+		//O(N)
+		//S(n)
+		for(char c:alphabet) {
+			if(c!=' ' && table.get(c) != null) {
+				int val = table.get(c);
+				table.put(c, ++val);
+				length++;
+			}else if(c!=' '){
+				table.put(c, 1);
+				length++;
+			}
+		}
+		if(palinPerm(table,length)) {
+			System.out.println("YES");
+		}else
+			System.out.println("NO");
+	}
+
+	private static Boolean palinPerm(Map<Character, Integer> table, int length) {
+		if(length%2==0) {
+			    return (iterate(true,table));
+		}else {
+				return (iterate(false,table));
+		}
+	}
+
+	private static Boolean iterate(boolean isEvenLen,Map<Character, Integer> table) {
+		int exception = 0;
+		//O(N)
+		Iterator<Map.Entry<Character, Integer>> itr = table.entrySet().iterator();
+				while(itr.hasNext()) {
+					
+					Map.Entry<Character, Integer> entry = itr.next();
+					
+					if(!isEvenLen && entry.getValue()==1) {
+						exception++;
+						if(exception>1) {
+							return false;
+						}
+					}
+					//Forgot %2 ----wrongly put entry.getvalue()<2
+					else if(isEvenLen && entry.getValue()%2!=0) {
+						return false;
+					}
+				}
+		return true;
+	}
+}
