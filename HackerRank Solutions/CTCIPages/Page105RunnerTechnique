@@ -1,0 +1,46 @@
+package com.hp.interviewBook;
+
+import java.util.LinkedList;
+
+public class Page105RunnerTechnique {
+	LinkedList<String> newRunner = new LinkedList<String>();
+	public static void main(String[] args) {
+		Page105RunnerTechnique pg = new Page105RunnerTechnique();
+		pg.checkRunner();
+	}
+	private void checkRunner() {
+		newRunner.add("1a");//h
+		newRunner.add("2a");//r//h
+		newRunner.add("3a");//h
+		newRunner.add("4a");//r//h
+		newRunner.add("5a");//h
+		newRunner.add("6a");//r//h
+		newRunner.add("1b");
+		newRunner.add("2b");//r
+		newRunner.add("3b");
+		newRunner.add("4b");//r
+		newRunner.add("5b");
+		newRunner.add("6b");//r
+		int hare=0;
+		//initialized 2
+		int runner=1;
+		
+		
+		//ERROR:runner<=newRunner.size()
+		while(runner<newRunner.size()-1) {
+			hare+=1;
+			runner+=2;
+		}
+		runner=1;
+		hare++;
+		
+		while(hare<=newRunner.size()-1) {
+			String newRun = newRunner.get(hare);
+			newRunner.remove(hare);
+			newRunner.add(runner, newRun);
+			runner+=2;
+			hare++;
+		}
+		System.out.println(newRunner);
+	}
+}
