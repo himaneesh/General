@@ -1,0 +1,51 @@
+package com.hp.interviewBook;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.hp.AssortedMethods.LinkedListNode;
+
+public class Page94Ex24 {
+
+	public static void main(String[] args) {
+		/* Create linked list */
+		int[] vals = { 33, 9, 2, 3, 10, 10389, 838, 874578, 5 };
+		List<LinkedListNode> llList = new ArrayList<>();
+		for (int i = 0; i < vals.length; i++) {
+			llList.add(new LinkedListNode(null, vals[i], null));
+		}
+		for (int i = 0; i < llList.size() - 1; i++) {
+			llList.get(i).next = llList.get(i + 1);
+		}
+		llList.get(0).printForward(llList.get(0));
+		LinkedListNode head = llList.get(0);
+		/* Partition */
+		LinkedListNode h = partition(head, 874578);
+		System.out.println(h);
+		/* Print Result */
+		// h.printForward();
+	}
+
+	private static LinkedListNode partition(LinkedListNode head, int i) {
+
+		LinkedListNode prev = null;
+		LinkedListNode cur = head;
+		while (cur != null) {
+			if (cur.value < i) {
+				// swap it with head
+				if (prev != null) {
+					prev.next = cur.next;
+					cur.next = head;
+					head = cur;
+					cur = prev;
+				}
+			}
+			prev = cur;
+			cur = cur.next;
+		}
+		head.printForward(head);
+
+		return head;
+	}
+
+}
