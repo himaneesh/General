@@ -47,5 +47,33 @@ public class Page94Ex24 {
 
 		return head;
 	}
+package com.hp.AssortedMethods;
+
+public class LinkedListNode {
+	public int value;
+	public LinkedListNode next;
+	LinkedListNode prev;
+	public LinkedListNode(LinkedListNode prev ,int value, LinkedListNode next) {
+		super();
+		this.value = value;
+		this.next = next;
+		this.prev = prev;
+	}
+	public void printForward(LinkedListNode node){
+		if(node==null) {
+			System.out.println("Empty");
+		}
+		if(node.next==null) {
+			System.out.println(node.value);
+		}
+		else {
+			while(null!=node) {
+				System.out.println(node.value);
+				node=node.next;
+			}
+		}
+	}
+	
+}
 
 }
